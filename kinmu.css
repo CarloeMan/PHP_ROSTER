@@ -1,0 +1,10 @@
+.dispDay {
+    text-align: center;
+    font-size:17px;
+    color:green;
+    background-color:yellow;
+}
+
+.border {
+    border-collapse: collapse;
+}
