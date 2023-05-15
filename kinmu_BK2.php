@@ -17,8 +17,10 @@ const MAX_DAYS = 31; // １か月に存在する最大の日数
 function makeKinmuhyoHtml(array $list) : void  {
     $startFlg = $list["startFlg"];
     $endFlg = $list["endFlg"];
-    $now = new DateTime();
-    $strNowYmd = $now->format('Ymd');
+    if ($startFlg == "1" || $endFlg == "1") {
+        $now = new DateTime();
+        $strNowYmd = $now->format('Ymd');
+    }
     $strYear = $list["strYear"];
     $strMonth = $list["strMonth"];
     $strYM = $strYear.$strMonth;
@@ -68,36 +70,30 @@ $strNowYear  = $now->format('Y');
 $strNowMonth = $now->format('m');
 $list["strYear"] = $strNowYear;
 $list["strMonth"] = $strNowMonth;
-?>
 
-<div style="text-align:center;">
-  <h2>勤怠管理表</h2>
-  <div style="text-align:center;">
-    <button type="button" style="margin-right:20px;">＜前月</button>
-      <span>
-<?php
-        echo $strNowYear.'年'.$strNowMonth.'月';
+echo '<div style="text-align:center;">';
+echo '<h2>'.'勤怠管理表'.'</h2>';
+echo '<div style="text-align:center;">';
+echo '<button type="button" style="margin-right:20px;">＜前月</button>';
+echo '<span>'.$strNowYear.'年'.$strNowMonth.'月'.'</span>';
+echo '<button type="button" style="margin-left:20px;">翌月＞</button>';
+echo '</div>';
+echo '<div style="margin-top:20px;">';
+echo '<button type="button" style="margin-right:20px;" onClick="workStart();">業務開始</button>';
+echo '<button type="button" onClick="workEnd();">業務終了</button>';
+echo '</div>';
+// 勤務表作成
+echo '<table border="1" class="border" style="margin:auto; margin-top:20px;">';
+echo '<tr>';
+echo '<td width="150px" class="dispDay">'.'日付'.'</td>';
+echo '<td width="200px" class="dispDay">'.'始業時間'.'</td>';
+echo '<td width="200px" class="dispDay">'.'終業時間'.'</td>';
+makeKinmuhyoHtml($list); // 勤務表を表示
+echo '</tr>';
+echo '</td>';
+echo '</table>';
+echo '</div>';
 ?>
-      </span>
-    <button type="button" style="margin-left:20px;">翌月＞</button>
-  </div>
-  <div style="margin-top:20px;">
-    <button type="button" style="margin-right:20px;" onClick="workStart();">業務開始</button>
-    <button type="button" onClick="workEnd();">業務終了</button>
-  </div>
-  <!-- 勤務表作成開始 -->
-  <table border="1" class="border" style="margin:auto; margin-top:20px;">
-    <tr>
-      <td width="150px" class="dispDay">日付</td>
-      <td width="200px" class="dispDay">始業時間</td>
-      <td width="200px" class="dispDay">終業時間</td>
-<?php
-    makeKinmuhyoHtml($list); // 勤務表を表示
-?>
-    </tr>
-  </table>
-  <!-- 勤務表作成終了 -->
-</div>
 <!-- 隠し項目（パラメータ）-->
 <input type="hidden" name="startFlg" value="">
 <input type="hidden" name="startSumiFlg" value="">
